@@ -1,0 +1,68 @@
+/*
+author: keke
+project name:Prim算法(堆优化)
+Time Complexity: O(mlog(n))
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define pi acos(-1.0)
+#define inf 0x3f3f3f3f
+typedef long long ll;
+typedef unsigned long long ull;
+typedef double db;
+int mo[4][2] = { -1,0,1,0,0,-1,0,1 };
+//int mo[8][2] = { -1,0,1,0,-1,-1,1,1,0,-1,0,1,1,-1,-1,1 };
+const int maxn = 2e5 + 10;
+int n, m, ans, head[maxn], cnt, dis[5010], sum;
+bool vis[maxn];
+struct xx {//链式前向星存图
+	int t, next, w;
+}xx[maxn << 1];
+void add(int a, int b, int c) {//添加边
+	xx[cnt].next = head[a];
+	xx[cnt].t = b;
+	xx[cnt].w = c;
+	head[a] = cnt++;
+}
+priority_queue<pair<int, int> >q;
+void solve(int x) {
+	memset(dis,127,sizeof(dis));//初始化为很大的数
+	dis[x] = 0;//设置源点的dis为0
+	q.push(make_pair(0, 1));
+	while (!q.empty() && sum < n) {
+		int a = q.top().first, b = q.top().second;
+		q.pop();
+		if (vis[b])continue;
+		vis[b] = true;
+		++sum, ans -= a;//a为负数
+		for (int i = head[b]; ~i; i = xx[i].next) {
+			int to = xx[i].t;
+			if (xx[i].w < dis[to]) {
+				dis[to] = xx[i].w;
+				q.push(make_pair(-dis[to], to));//加个'-',大根堆变小根堆
+			}
+		}
+	}
+}
+int main() {
+#ifdef ONLINE_JUDGE
+#else
+	//freopen("input.txt", "r", stdin);
+#endif
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+	cout << fixed << setprecision(2);
+	memset(head, -1, sizeof(head));
+	cin >> n >> m;
+	while (m--) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		add(a, b, c);
+		add(b, a, c);//无向图，需要反向加边
+	}
+	solve(1);//设置节点1为源点
+	if (sum == n)cout << ans << "\n";
+	else cout << "orz" << "\n";
+	return 0;
+	//good job!
+}
