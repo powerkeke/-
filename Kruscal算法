@@ -1,0 +1,55 @@
+/*
+author: keke
+project name:Kruscal算法
+Time Complexity: O(mlog(m))
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define pi acos(-1.0)
+#define inf 0x3f3f3f3f
+typedef long long ll;
+typedef unsigned long long ull;
+typedef double db;
+int mo[4][2] = { -1,0,1,0,0,-1,0,1 };
+//int mo[8][2] = { -1,0,1,0,-1,-1,1,1,0,-1,0,1,1,-1,-1,1 };
+const int maxn = 2e5 + 10;
+int n, m, is, t, ans, p[5010], cnt;
+struct xx {//存边
+	int f, t, w;
+}xx[maxn];
+int find(int x) {//并查集查找祖先，维护集合问题
+	if (x == p[x])return x;
+	else return p[x] = find(p[x]);
+}
+bool cmp(struct xx a, struct xx b) { return a.w < b.w; }//权值从小到大
+void solve() {
+	sort(xx + 1, xx + 1 + m, cmp);
+	int sum = 0;//计加入的边数
+	for (int i = 1; i <= m; i++) {
+		int a = find(xx[i].f), b = find(xx[i].t);
+		if (a != b) {//若不会构成环，则将这条边加入集合
+			p[a] = b;
+			++sum, ans += xx[i].w;
+		}
+		if (sum == n - 1)break;
+	}
+	if (sum == n - 1)cout << ans << "\n";
+	else cout << "orz" << "\n";
+}
+int main() {
+#ifdef ONLINE_JUDGE
+#else
+	freopen("input.txt", "r", stdin);
+#endif
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+	cout << fixed << setprecision(2);
+	cin >> n >> m;
+	for (int i = 1; i <= n; i++)p[i] = i;
+	for (int i = 1; i <= m; i++) {
+		cin >> xx[i].f >> xx[i].t >> xx[i].w;
+	}
+	solve();
+	return 0;
+	//good job!
+}
