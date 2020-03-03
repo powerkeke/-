@@ -47,8 +47,3 @@ int main() {
 	return 0;
 	//good job!
 }
-/*
-author: keke
-Update log:
-2020/3/3 19:44:43  A bug is found...
-*/
