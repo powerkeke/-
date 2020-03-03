@@ -31,12 +31,12 @@ int main() {
 		}
 		for (int i = 1; i <= m; i++) {
 			cin >> a >> b >> c;
-			p[a][b] = p[b][a] = min(c, p[a][b]);
+			p[a][b] = p[b][a] = min(c, p[a][b]);//二维矩阵存图
 		}
 		for (int i = 1; i <= n; i++) {
 			for (int k = 1; k <= n; k++) {
 				for (int j = 1; j <= n; j++) {
-					p[k][j] = min(p[k][j], p[k][i] + p[i][j]);
+					p[k][j] = min(p[k][j], p[k][i] + p[i][j]);//松弛操作
 				}
 			}
 		}
@@ -47,3 +47,8 @@ int main() {
 	return 0;
 	//good job!
 }
+/*
+author: keke
+Update log:
+2020/3/3 19:44:43  A bug is found...
+*/
