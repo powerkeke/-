@@ -18,7 +18,7 @@ bool vis[maxn];
 struct xx {
 	int t, next, w;
 }xx[maxn << 1];
-void add(int a, int b, int c) {
+void add(int a, int b, int c) {//链式前向星
 	xx[cnt].next = head[a];
 	xx[cnt].t = b;
 	xx[cnt].w = c;
@@ -30,7 +30,7 @@ void solve(int x, int y) {
 	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > q;
 	while (!q.empty())q.pop();
 	dis[x] = 0;
-	q.push(make_pair(0, x));
+	q.push(make_pair(0, x));//采用堆优化
 	while (!q.empty()) {
 		int a = q.top().first, b = q.top().second;
 		q.pop();
@@ -38,7 +38,7 @@ void solve(int x, int y) {
 		vis[b] = true;
 		for (int i = head[b]; ~i; i = xx[i].next) {
 			int to = xx[i].t;
-			if (xx[i].w + a < dis[to]) {
+			if (xx[i].w + a < dis[to]) {//松弛操作
 				dis[to] = a + xx[i].w;
 				q.push(make_pair(dis[to], to));
 			}
