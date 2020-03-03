@@ -1,6 +1,6 @@
 /*
 author: keke
-project name:Dijkstra算法
+project name:Dijkstra算法(堆优化)
 Time Complexity: O(nlog(n))
 */
 #include<bits/stdc++.h>
