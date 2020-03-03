@@ -1,0 +1,49 @@
+/*
+author: keke
+project name:Floyd算法
+Time Complexity: O(n³)
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define pi acos(-1.0)
+#define inf 0x3f3f3f3f
+typedef long long ll;
+typedef unsigned long long ull;
+typedef double db;
+int mo[4][2] = { -1,0,1,0,0,-1,0,1 };
+//int mo[8][2] = { -1,0,1,0,-1,-1,1,1,0,-1,0,1,1,-1,-1,1 };
+const int maxn = 110;
+ll n, m, is, t, ans, p[maxn][maxn], a, b, c;
+int main() {
+#ifdef ONLINE_JUDGE
+#else
+	//freopen("input.txt", "r", stdin);
+#endif
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+	cout << fixed << setprecision(2);
+	while (cin >> n >> m) {
+		for (int i = 1; i <= n; i++) {
+			for (int k = 1; k <= n; k++) {
+				if (i == k)p[i][k] = 0;
+				else p[i][k] = 1e18;
+			}
+		}
+		for (int i = 1; i <= m; i++) {
+			cin >> a >> b >> c;
+			p[a][b] = p[b][a] = min(c, p[a][b]);
+		}
+		for (int i = 1; i <= n; i++) {
+			for (int k = 1; k <= n; k++) {
+				for (int j = 1; j <= n; j++) {
+					p[k][j] = min(p[k][j], p[k][i] + p[i][j]);
+				}
+			}
+		}
+		cin >> a >> b;
+		if (p[a][b] == 1e18)cout << "No path" << "\n";
+		else cout << p[a][b] << "\n";
+	}
+	return 0;
+	//good job!
+}
