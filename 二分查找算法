@@ -1,0 +1,29 @@
+/*
+author: keke
+project name:二分查找算法
+Time Complexity: O(log(n))
+*/
+#include<bits/stdc++.h>
+using namespace std;
+const int maxn=100;
+int T[maxn],n,x;
+void solve(int x){
+	int l=1,r=n;
+	while(l<=r){
+		int mid=(l+r)>>1;
+		if(T[mid]==x){
+			cout<<mid<<"\n";
+			return;//找到x，输出下标mid 
+		}
+		if(T[mid]<x)l=mid+1;//不断二分，逼近x 
+		else r=mid-1;
+	}
+	cout<<0<<"\n";//未找到x，输出0 
+}
+int main(){
+	cin>>n;//数组长度为n 
+	for(int i=1;i<=n;i++)cin>>T[i];
+	cin>>x;//查找x的下标 
+	solve(x);
+	return 0;
+}
