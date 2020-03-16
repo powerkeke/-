@@ -1,3 +1,8 @@
+/*
+author: keke
+project name:暴力查找算法
+Time Complexity: O(n)
+*/
 #include<bits/stdc++.h>
 using namespace std;
 const int maxn=100;
