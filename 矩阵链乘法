@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int m[7][7]= {0};   // 记录ij之间最优代价
+int s[7][7]= {0};   //记录ij之间最优划分的位置
+
+void Print(int s[][7],int i,int j) { //打印划分结果的递归函数
+	if(i==j) {  //当划分到单个矩阵时，打印这个矩阵
+		printf("A%d",i);
+	} else { //非单个矩阵时进入递归
+		printf("(");
+		Print(s,i,s[i][j]);     //在ij之间划分后的左边部分再次划分的最优位置必定在i和s[i][j](本次划分的最优位置)之间
+		Print(s,s[i][j]+1,j);   //在ij之间划分后的右边部分再次划分的最优位置必定在(s[i][j]+1)和j之间
+		printf(")");
+	}
+}
+void Matrix_Chain_Order(int p[],int n) {
+	int i,j,L,k,q;
+	for(i=1; i<=n; i++) { //先对单个矩阵的链，求解，即所有m[i][i] =0;
+		m[i][i]=0;
+	}
+	for(L=2; L<=n; L++) //L 表示i，j间长度，即矩阵链的长度，在n允许的范围内逐渐增加L
+		for(i=1; i<=n-L+1; i++) { //在给定p[]中的矩阵链中，对所有种长度为L的情况计算
+			j = i+L-1;
+			m[i][j]=-1;
+			for(k=i; k<=j-1; k++) {
+				q = m[i][k]+m[k+1][j]+p[i-1]*p[k]*p[j];//计算划分的代价,并将最有代价和位置分别存在m[i][j]和s[i][j]中                if(q<m[i][j] || m[i][j]==-1)
+
+				{
+					m[i][j]=q;
+					s[i][j]=k;
+				}
+			}
+		}
+}
+void main() {
+	int p[] = {30,35,15,5,10,20,25};    //矩阵的输入
+	int length = sizeof(p)/sizeof(p[0])-1;  //矩阵长度
+	int i,j;
+	Matrix_Chain_Order(p,length);
+
+	for(i=1; i<=6; i++) { //打印ij之间最优代价
+		for(j=1; j<=6; j++)
+			printf("%8d",m[i][j]);
+		printf("\n");
+	}
+
+	Print(s,1,6);   //打印划分结果
+	printf("\n");
+}
