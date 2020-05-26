@@ -13,15 +13,17 @@ db r[maxn], ans = 1e9, p[maxn],ans1[maxn];
 db com() {
     db l=0.0,h=0.0;
     for(int i=1;i<=n;i++){
+        //计算最左和最右端的坐标
         l=min(l,p[i]-r[i]);
         h=max(h,p[i]+r[i]);
     }
+    //更新ans的最小值
     if(ans>h-l){
         ans=h-l;
         for(int i=1;i<=n;i++)ans1[i]=r[i];
     }
 }
-db get(int x) {
+db get(int x) {//计算圆心坐标
     db sum = 0.0;
     for (int i = 1; i < x; i++)sum = max(sum, p[i] + 2.0 * sqrt(r[i] * r[x]));
     return sum;
