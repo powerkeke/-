@@ -1,0 +1,53 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define db double
+const int maxn = 110;
+int n;
+db r[maxn], ans = 1e9, p[maxn],ans1[maxn];
+db com() {
+    db l=0.0,h=0.0;
+    for(int i=1;i<=n;i++){
+        l=min(l,p[i]-r[i]);
+        h=max(h,p[i]+r[i]);
+    }
+    if(ans>h-l){
+        ans=h-l;
+        for(int i=1;i<=n;i++)ans1[i]=r[i];
+    }
+}
+db get(int x) {
+    db sum = 0.0;
+    for (int i = 1; i < x; i++)sum = max(sum, p[i] + 2.0 * sqrt(r[i] * r[x]));
+    return sum;
+}
+void solve(int x) {
+    if (x > n) {
+        com();
+        return;
+    }
+    for (int i = x; i <= n; i++) {
+        swap(r[x], r[i]);
+        db cnt = get(x);
+        if (cnt + r[1] + r[x] < ans) {
+            //圆排列的圆心横坐标以第一个圆的圆心为原点。
+            //所以，总长度为第一个圆的半径+最后一个圆的半径+最后一个圆的横坐标。
+            p[x] = cnt;
+            solve(x + 1);
+        }
+        swap(r[x], r[i]);//回溯
+    }
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cout << fixed << setprecision(2);
+    cin >> n;
+    for (int i = 1; i <= n; i++) cin >> r[i];
+    solve(1);
+    cout << "最短长度为" << ans << "\n";
+    cout << "最优情况下，圆的半径依次为";
+    for (int i = 1; i <= n; i++) cout << ans1[i] << (i == n ? "\n" : " ");
+    return 0;
+    // good job!
+}
