@@ -1,3 +1,8 @@
+/*
+author: keke
+project name:图的m着色问题
+Time Complexity: O(nm^n)
+*/
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
