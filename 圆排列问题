@@ -1,4 +1,8 @@
-
+/*
+author: keke
+project name:圆排列问题
+Time Complexity: O((n+1)!)
+*/
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
